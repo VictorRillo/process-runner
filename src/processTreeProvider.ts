@@ -29,7 +29,6 @@ export class GroupItem extends vscode.TreeItem {
     }
     
     this.contextValue = "group";
-    console.log(`GroupItem created with contextValue: ${this.contextValue}`);
     
     // Description with state counter
     this.description = `${runningCount}/${totalCount} active`;
