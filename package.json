@@ -3,7 +3,7 @@
   "displayName": "Process Runner",
   "description": "Extension for managing processes",
   "version": "0.0.1",
-  "publisher": "rillovic",
+  "publisher": "VictorRillo",
   "engines": {
     "vscode": "^1.107.0"
   },
@@ -171,7 +171,7 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
     "test": "vscode-test",
-    "full-install": "npm run compile && npm run package && rm process-runner-0.0.1.vsix && vsce package && code --install-extension process-runner-0.0.1.vsix"
+    "full-install": "npm run compile && npm run package && node scripts/full-install.js"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -182,6 +182,7 @@
     "esbuild": "^0.27.2",
     "eslint": "^9.39.2",
     "npm-run-all": "^4.1.5",
+    "rimraf": "^6.1.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.52.0"
   },
