@@ -4,6 +4,7 @@
   "description": "Extension for managing processes",
   "version": "0.0.3",
   "publisher": "VictorRillo",
+  "icon": "media/icon.png",
   "engines": {
     "vscode": "^1.107.0"
   },
@@ -22,7 +23,7 @@
         {
           "id": "processRunner",
           "title": "Process Runner",
-          "icon": "media/icon.svg"
+          "icon": "media/icon.png"
         }
       ]
     },
