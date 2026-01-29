@@ -1,0 +1,191 @@
+{
+  "name": "process-runner",
+  "displayName": "Process Runner",
+  "description": "Extension for managing processes",
+  "version": "0.0.1",
+  "publisher": "rillovic",
+  "engines": {
+    "vscode": "^1.107.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VictorRillo/process-runner"
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "processRunner",
+          "title": "Process Runner",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "processRunner": [
+        {
+          "icon": "media/icon.svg",
+          "id": "processRunnerView",
+          "name": "Processes"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "processRunner.start",
+        "title": "Start Process"
+      },
+      {
+        "command": "processRunner.stop",
+        "title": "Stop Process"
+      },
+      {
+        "command": "processRunner.showLog",
+        "title": "Show Log"
+      },
+      {
+        "command": "processRunner.startAll",
+        "title": "Start All"
+      },
+      {
+        "command": "processRunner.stopAll",
+        "title": "Stop All"
+      },
+      {
+        "command": "processRunner.killPort",
+        "title": "Kill Process Using Port"
+      },
+      {
+        "command": "processRunner.startGroup",
+        "title": "Start All in Group",
+        "icon": "$(play)"
+      },
+      {
+        "command": "processRunner.stopGroup",
+        "title": "Stop All in Group",
+        "icon": "$(stop)"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "processRunner.start",
+          "when": "view == processRunnerView && viewItem == stopped",
+          "group": "inline"
+        },
+        {
+          "command": "processRunner.stop",
+          "when": "view == processRunnerView && viewItem == running",
+          "group": "inline"
+        },
+        {
+          "command": "processRunner.showLog",
+          "when": "view == processRunnerView && viewItem != group",
+          "group": "inline"
+        },
+        {
+          "command": "processRunner.killPort",
+          "when": "view == processRunnerView && viewItem =~ /portInUse/",
+          "group": "inline"
+        },
+        {
+          "command": "processRunner.startGroup",
+          "when": "view == processRunnerView && viewItem == 'group'"
+        },
+        {
+          "command": "processRunner.stopGroup",
+          "when": "view == processRunnerView && viewItem == 'group'"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "processRunner.startAll",
+          "when": "view == processRunnerView",
+          "group": "navigation"
+        },
+        {
+          "command": "processRunner.stopAll",
+          "when": "view == processRunnerView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Process Runner",
+      "properties": {
+        "processRunner.processes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "command"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "command": {
+                "type": "string"
+              },
+              "cwd": {
+                "type": "string"
+              },
+              "port": {
+                "type": "number"
+              },
+              "group": {
+                "type": "string",
+                "description": "Nombre del grupo al que pertenece este proceso"
+              }
+            }
+          }
+        },
+        "processRunner.enableGrouping": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilitar agrupación de procesos por el campo 'group'"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "full-install": "npm run compile && npm run package && rm process-runner-0.0.1.vsix && vsce package && code --install-extension process-runner-0.0.1.vsix"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.107.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.52.0"
+  },
+  "dependencies": {
+    "util": "^0.12.5"
+  }
+}
